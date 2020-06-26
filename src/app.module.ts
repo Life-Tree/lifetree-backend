@@ -1,10 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
+import { ConfigModule } from '@nestjs/config';
+
+import configuration from './config/env/configuration';
+import * as host from './config/database/databaseConnection';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    //Configuracion de las variables de entorno del servidor
+    ConfigModule.forRoot({
+      load: [
+          configuration,
+        ]
+    }),
+    //Configuracion del driver de conexion de la base de datos
+    MongooseModule.forRoot(host.database().mongodb)
+  ],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  
+}
+
