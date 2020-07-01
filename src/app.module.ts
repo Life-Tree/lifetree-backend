@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { ConfigModule } from '@nestjs/config';
 
-import configuration from './config/env/configuration';
+import configuration from './config/environment/configuration';
 import * as host from './config/database/databaseConnection';
 import { MongooseModule } from '@nestjs/mongoose';
 
