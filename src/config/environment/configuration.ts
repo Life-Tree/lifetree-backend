@@ -8,4 +8,3 @@ export default () => ({
     },
 });
 
-//comentario 2
