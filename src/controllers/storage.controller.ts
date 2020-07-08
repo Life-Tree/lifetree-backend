@@ -1,9 +1,9 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { StorageServiceFactoryService } from 'src/models/apis_services/storageServiceFactory.service';
-import { IStorageService } from 'src/models/apis_services/storageService.interface';
-import { SERVICE } from 'src/models/apis_services/service.enum';
-import { VisionServiceFactoryService } from 'src/models/apis_services/visionServiceFactory.service';
-import { IVisionService } from 'src/models/apis_services/visionService.interface';
+import { StorageServiceFactoryService } from 'src/models/apis-services/Storage-Service/storageServiceFactory.service';
+import { IStorageService } from 'src/models/apis-services/Storage-Service/storageService.interface';
+import { SERVICE } from 'src/models/apis-services/service.enum';
+import { VisionServiceFactoryService } from 'src/models/apis-services/Vision-Service/visionServiceFactory.service';
+import { IVisionService } from 'src/models/apis-services/Vision-Service/visionService.interface';
 
 @Controller('storage')
 export class StorageController {

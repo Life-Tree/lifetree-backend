@@ -3,8 +3,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import configuration from './config/environment/configuration';
-import { ApiServiceModule } from './models/apis_services/apiService.module';
+import { StorageServiceModule } from './models/apis-services/Storage-Service/storageService.module';
 import { ControllerModule } from './controllers/controller.module';
+import { VisionServiceModule } from './models/apis-services/vision-Service/vision-service.module';
 
 @Module({
   imports: [
@@ -16,8 +17,9 @@ import { ControllerModule } from './controllers/controller.module';
     }),
     //Configuracion del driver de conexion de la base de datos
     //MongooseModule.forRoot(host.database().mongodb),
-    ApiServiceModule,
-    ControllerModule
+    StorageServiceModule,
+    ControllerModule,
+    VisionServiceModule
   ],
 })
 export class AppModule {
