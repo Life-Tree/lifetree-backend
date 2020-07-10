@@ -10,6 +10,7 @@ import { IVisionService } from '../vision-Service/interfaces/visionService.inter
 import { VISION_SERVICE } from '../vision-Service/constantes/serviceVision.enum';
 import { IStorageService } from '../storage-Service/interfaces/storageService.interface';
 import { STORAGE_SERVICE } from '../storage-Service/constantes/serviceStorage.enum';
+import { ResultMesagge } from './enums/enums';
 
 @Injectable()
 export class ArbolesService {
@@ -20,21 +21,21 @@ export class ArbolesService {
 
     }
 
-    public async nuevoArbol(descripcion: string, img: string, lat: number, lon: number, barrio: string): Promise<boolean>{
+    public async nuevoArbol(descripcion: string, img: string, lat: number, lon: number, barrio: string): Promise<string>{
         let ubicacion = new Ubicacion(lat,lon,barrio);
-        let nuevoArbol = new Arbol(descripcion,img,ubicacion);
-        console.log("punto1");        
-        const visionService:IVisionService = this.visionServiceFactory.getVisionService(VISION_SERVICE.GOOGLE_VISION);
-        console.log("punto2");        
+        let nuevoArbol = new Arbol(descripcion,img,ubicacion);        
+        const visionService:IVisionService = this.visionServiceFactory.getVisionService(VISION_SERVICE.GOOGLE_VISION);               
         let esArbol: boolean = await visionService.isTree(img);
         console.log(esArbol);
-        if(esArbol){            
+        if(esArbol){
             const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.GOOGLE_STORAGE);
             let imagenURL = await storageService.uploadFile(img);
             nuevoArbol.setImagenURL(imagenURL);
-            return await this.persistencia.saveOne(nuevoArbol,CrudType.MONGODB,"arboles");
-        }
-        return false;   
+            let guardado = await this.persistencia.saveOne(nuevoArbol,CrudType.MONGODB,"arboles");
+            return guardado? ResultMesagge.EXITO : ResultMesagge.PROBLEMA_EN_BASE_DE_DATOS;
+        }else{
+            return ResultMesagge.NO_ES_ARBOL;
+        }  
     }
 
     public async getArboles(): Promise<Arbol[]>{        

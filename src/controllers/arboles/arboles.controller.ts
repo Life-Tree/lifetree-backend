@@ -21,18 +21,16 @@ export class ArbolesController {
     }    
 
     @Post()
-    crearArbol(@Body() arbol: ArbolDTO): string{
-        let result = this.arbolesManager.nuevoArbol(arbol.descripcion,arbol.imagenData,arbol.latitud,arbol.longitud, arbol.barrio);
-        console.log(arbol);        
-        return "Arbol Creado? "+ result;
+    async crearArbol(@Body() arbol: ArbolDTO): Promise<string>{
+        let result = await this.arbolesManager.nuevoArbol(arbol.descripcion,arbol.imagenData,arbol.latitud,arbol.longitud, arbol.barrio);                
+        return result;
     }
 
     @Put(':idArbol')
     modificarArbol(@Body() arbol: ArbolDTO, @Param('idArbol') arbolId: string): string{
         let result = this.arbolesManager.updateArbol(arbolId, arbol.descripcion,arbol.imagenData,arbol.latitud,arbol.longitud, arbol.barrio);        
         console.log(arbol);        
-        return "Arbol Actualizado? "+ result;    
-
+        return "Arbol Actualizado? "+ result;
     }
 
     @Delete(':idArbol')
