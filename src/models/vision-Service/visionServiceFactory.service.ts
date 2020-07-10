@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { IVisionService } from './visionService.interface';
-import { VISION_SERVICE } from '../vision-Service/serviceVision.enum';
-import { GoogleVision } from './googleVision';
+import { IVisionService } from './interfaces/visionService.interface';
+import { VISION_SERVICE } from './constantes/serviceVision.enum';
+import { GoogleVision } from './implementaciones/googleVision';
 
 @Injectable()
 export class VisionServiceFactoryService {

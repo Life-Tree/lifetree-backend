@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { StorageController } from './storage.controller';
-import { StorageServiceModule } from 'src/models/apis-services/Storage-Service/storageService.module';
-import { VisionServiceModule } from 'src/models/apis-services/vision-Service/vision-service.module';
+import { StorageServiceModule } from 'src/models/storage-Service/storageService.module';
+import { VisionServiceModule } from 'src/models/vision-Service/vision-service.module';
+import { ArbolesController } from './arboles/arboles.controller';
 
 @Module({
   imports: [
@@ -9,7 +10,8 @@ import { VisionServiceModule } from 'src/models/apis-services/vision-Service/vis
     VisionServiceModule
   ],
   controllers: [
-    StorageController
+    StorageController,
+    ArbolesController
   ]
 })
 export class ControllerModule {}

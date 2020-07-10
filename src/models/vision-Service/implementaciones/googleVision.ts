@@ -1,4 +1,4 @@
-import { IVisionService } from "./visionService.interface";
+import { IVisionService } from "../interfaces/visionService.interface";
 import vision from '@google-cloud/vision';
 
 

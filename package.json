@@ -27,6 +27,8 @@
     "@nestjs/core": "^6.10.14",
     "@nestjs/mongoose": "^7.0.1",
     "@nestjs/platform-express": "^6.10.14",
+    "@types/mongodb": "^3.5.25",
+    "mongodb": "^3.5.9",
     "mongoose": "^5.9.20",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",

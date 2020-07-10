@@ -1,4 +1,4 @@
-import { IStorageService } from "./storageService.interface";
+import { IStorageService } from "../interfaces/storageService.interface";
 import { Storage } from '@google-cloud/storage';
 import * as fs from 'fs'
 

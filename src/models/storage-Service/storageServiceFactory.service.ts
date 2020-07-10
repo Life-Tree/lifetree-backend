@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { IStorageService } from "./storageService.interface";
-import { GoogleStorage } from './goolgeStorage';
-import { STORAGE_SERVICE } from './serviceStorage.enum';
+import { IStorageService } from "./interfaces/storageService.interface";
+import { GoogleStorage } from './implementaciones/goolgeStorage';
+import { STORAGE_SERVICE } from './constantes/serviceStorage.enum';
 
 @Injectable()
 export class StorageServiceFactoryService {
