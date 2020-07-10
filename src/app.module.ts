@@ -12,11 +12,11 @@ import { PersistenciaModule } from './models/persistencia/persistencia.module';
 @Module({
   imports: [
     //Configuracion de las variables de entorno del servidor
-    /*ConfigModule.forRoot({
+    ConfigModule.forRoot({
       load: [
           configuration,
         ]
-    }),*/
+    }),
     //Configuracion del driver de conexion de la base de datos
     //MongooseModule.forRoot(host.database().mongodb),
     StorageServiceModule,

@@ -31,7 +31,6 @@ export class ArbolesService {
         if(esArbol){            
             const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.GOOGLE_STORAGE);
             let imagenURL = await storageService.uploadFile(img);
-            console.log(imagenURL);
             nuevoArbol.setImagenURL(imagenURL);
             return await this.persistencia.saveOne(nuevoArbol,CrudType.MONGODB,"arboles");
         }

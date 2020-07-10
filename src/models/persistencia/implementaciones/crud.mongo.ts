@@ -1,14 +1,14 @@
 import { CRUD } from "../interfaces/crud.interface";
 
-import { MongoClient, Db, Collection, InsertOneWriteOpResult, ObjectId, UpdateWriteOpResult, WriteOpResult, ReplaceWriteOpResult} from "mongodb";
-import { client, db } from "src/main";
+import { Db, Collection, InsertOneWriteOpResult, ObjectId, WriteOpResult, ReplaceWriteOpResult } from "mongodb";
+import { db } from "src/main";
 
 
 export class CrudMongo<T> implements CRUD<T>{
     private collection: Collection;
     private db: Db;
 
-    constructor(collectionName: string){  
+    constructor(collectionName: string) {
         this.db = db;
         this.collection = this.db.collection(collectionName);
     }
@@ -19,14 +19,14 @@ export class CrudMongo<T> implements CRUD<T>{
     }
 
     async update(id: string, item: T): Promise<boolean> {
-        let _id = new ObjectId(id); 
-        let result: ReplaceWriteOpResult = await this.collection.replaceOne({"_id": _id},item, {upsert: true});
+        let _id = new ObjectId(id);
+        let result: ReplaceWriteOpResult = await this.collection.replaceOne({ "_id": _id }, item, { upsert: true });
         return !!result.result.ok;
     }
 
     async delete(id: string): Promise<boolean> {
         let _id = new ObjectId(id);
-        let result: WriteOpResult = await this.collection.remove({"_id": _id});
+        let result: WriteOpResult = await this.collection.remove({ "_id": _id });
         return !!result.result.ok
     }
 
@@ -37,8 +37,8 @@ export class CrudMongo<T> implements CRUD<T>{
 
 
     async findById(id: string): Promise<T> {
-        let _id = new ObjectId(id);        
-        let result = await this.collection.findOne({"_id": _id});
+        let _id = new ObjectId(id);
+        let result = await this.collection.findOne({ "_id": _id });
         return <T>result;
     }
 
