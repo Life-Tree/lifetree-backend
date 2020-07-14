@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Arbol } from './clases/arbol';
-import { Intervencion } from './clases/intervencion';
+import { Arbol} from './clases/arbol';
 import { Ubicacion } from './clases/ubicacion';
 import { CrudType } from '../persistencia/constantes/consts';
 import { PersistenciaService } from '../persistencia/persistencia.service';

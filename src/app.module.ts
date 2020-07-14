@@ -8,6 +8,7 @@ import { ControllerModule } from './controllers/controller.module';
 import { VisionServiceModule } from './models/vision-Service/vision-service.module';
 import { ArbolesModule } from './models/arboles/arboles.module';
 import { PersistenciaModule } from './models/persistencia/persistencia.module';
+import { PedagogiaModule } from './models/pedagogia/pedagogia.module';
 
 @Module({
   imports: [
@@ -17,13 +18,12 @@ import { PersistenciaModule } from './models/persistencia/persistencia.module';
           configuration,
         ]
     }),
-    //Configuracion del driver de conexion de la base de datos
-    //MongooseModule.forRoot(host.database().mongodb),
     StorageServiceModule,
     ControllerModule,
     VisionServiceModule,
     ArbolesModule,
-    PersistenciaModule
+    PersistenciaModule,
+    PedagogiaModule
   ],
 })
 export class AppModule {
