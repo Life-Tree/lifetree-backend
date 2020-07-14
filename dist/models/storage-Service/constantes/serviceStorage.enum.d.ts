@@ -1,3 +1,0 @@
-export declare enum STORAGE_SERVICE {
-    GOOGLE_STORAGE = "GOOGLE_STORAGE"
-}
