@@ -1,1 +1,1 @@
-web: node dist/main
+web: nest build node dist/main
