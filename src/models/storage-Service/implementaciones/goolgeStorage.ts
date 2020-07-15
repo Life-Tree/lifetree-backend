@@ -11,9 +11,10 @@ export class GoogleStorage implements IStorageService {
         const storage = new Storage({
             keyFilename: 'APIKEY_GOOGLE.json'
         });
-        
+        const num = Math.random()
         // direccion y nombre de la imagen que se va crear
-        const fileName: string = __dirname + "/" + imgData.substring(0, 21) + ".jpg";
+        const fileName: string = __dirname + "/" + num + imgData.substring(4, 10) + ".jpg";
+        console.log(fileName)
         // bucket de storage
         const bucket = storage.bucket('lifetree-v1');
         // crea un archivo local con el nombre de fileName
@@ -25,7 +26,7 @@ export class GoogleStorage implements IStorageService {
                         // elimina la imagen creada
                         fs.unlink(fileName, error => {
                             if (!error) {
-                                console.error('file delete ', imgData.substring(0, 21));
+                                console.error('file delete ', num + imgData.substring(4, 10));
                             }
                         });
                     }
