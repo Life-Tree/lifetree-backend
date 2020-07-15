@@ -14,8 +14,10 @@ async function bootstrap() {
   app.use(json({limit: '10mb'}))
   app.enableCors()
 
-  client = await MongoClient.connect(host.database().mongodb);
+  //client = await MongoClient.connect(host.database().mongodb);
+  client = await MongoClient.connect(`mongodb+srv://tree:v0YzQrRGDecDGSQW@dblifetree-pn1er.gcp.mongodb.net/dblifetree?retryWrites=true&w=majority`);
   db = client.db(config.get<string>('mongodb.name'));
-  app.listen(config.get<number>('port'));
+  //app.listen(config.get<number>('port'));
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
