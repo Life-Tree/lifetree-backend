@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Arbol} from './clases/arbol';
+import { Arbol, EstadoArbol} from './clases/arbol';
 import { Ubicacion } from './clases/ubicacion';
 import { CrudType } from '../persistencia/constantes/consts';
 import { PersistenciaService } from '../persistencia/persistencia.service';
@@ -11,6 +11,7 @@ import { IStorageService } from '../storage-Service/interfaces/storageService.in
 import { STORAGE_SERVICE } from '../storage-Service/constantes/serviceStorage.enum';
 import { ResultMesagge } from './enums/enums';
 import { TABLA_NAME_ARBOL } from './consts/constantes';
+import { Intervencion } from './clases/intervencion';
 
 @Injectable()
 export class ArbolesService {
@@ -46,10 +47,26 @@ export class ArbolesService {
         return await this.persistencia.getOne(id, CrudType.MONGODB, TABLA_NAME_ARBOL);
     }
 
-    public async updateArbol(id: string, descripcion: string, img: string, lat: number, lon: number, barrio: string): Promise<boolean>{
-        let ubicacion = new Ubicacion(lat,lon,barrio);
-        let nuevoArbol = new Arbol(descripcion,img,ubicacion);
-        return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, TABLA_NAME_ARBOL);
+    public async updateArbol(id: string, descripcion: string, img: string, lat: number, lon: number, barrio: string,
+        estado: EstadoArbol ,intervenciones: Intervencion[], tipoUpdate:"ADD_INTERVENCION"|"OTRO" ): Promise<boolean>{
+        if(tipoUpdate == "ADD_INTERVENCION"){
+            let ubicacion = new Ubicacion(lat,lon,barrio);
+            let nuevoArbol = new Arbol(descripcion,img,ubicacion);
+            const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.GOOGLE_STORAGE);
+            let imgDataLastIntervencion = intervenciones[intervenciones.length-1].getImagenURL();
+            let imgURLLastIntervencion = await storageService.uploadFile(imgDataLastIntervencion);
+            intervenciones[intervenciones.length-1].setImagenURL(imgURLLastIntervencion);
+            nuevoArbol.setIntervenciones(intervenciones);
+            nuevoArbol.setEstado(estado);
+            return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, TABLA_NAME_ARBOL);
+        }else{
+            let ubicacion = new Ubicacion(lat,lon,barrio);
+            let nuevoArbol = new Arbol(descripcion,img,ubicacion);
+            nuevoArbol.setIntervenciones(intervenciones);
+            nuevoArbol.setEstado(estado);
+            return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, TABLA_NAME_ARBOL);
+        }
+        
     }
 
     public async deleteArbol(id: string): Promise<boolean>{

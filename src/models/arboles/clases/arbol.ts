@@ -2,9 +2,9 @@ import { Ubicacion } from "./ubicacion";
 import { Intervencion } from "./intervencion";
 
 export enum EstadoArbol{
-    ENFERMO,
-    INTERVENIDO,
-    CURADO,
+    ENFERMO = "ENFERMO",
+    INTERVENIDO ="INTERVENIDO",
+    CURADO = "CURADO",
 }
 
 export class Arbol {
@@ -52,6 +52,10 @@ export class Arbol {
 
     public setUbicacion(ubic: Ubicacion): void{
         this.ubicacion = ubic;
+    }
+
+    public setIntervenciones(inters: Intervencion[]): void{
+        this.intervenciones = inters;
     }
 
     public addIntervencion(inter: Intervencion): void{

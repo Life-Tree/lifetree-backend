@@ -1,7 +1,10 @@
+import { EstadoIntervencion } from "src/models/arboles/clases/intervencion";
+import { EstadoArbol } from "src/models/arboles/clases/arbol";
+
 export class ArbolDTO{
-    latitud: number;
-    longitud: number;
-    barrio: string;
+    ubicacion: {latitud: number; longitud: number; barrio: string;}
     descripcion: string;
+    intervenciones?: {imagenData:string, descripcion:string, estado: EstadoIntervencion}[];
     imagenData: string;
+    estado?: EstadoArbol;
 }

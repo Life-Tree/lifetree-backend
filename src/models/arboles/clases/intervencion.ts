@@ -1,21 +1,21 @@
 export enum EstadoIntervencion{
-    PENDIENTE,
-    APROBADA,
-    RECHAZADA,
+    PENDIENTE = "PENDIENTE",
+    APROBADA = "APROBADA",
+    RECHAZADA = "RECHAZADA",
 }
 export class Intervencion {
-    private imagenesURL: string[];
+    private imagenURL: string;
     private descripcion: string;
     private estado: EstadoIntervencion;
 
-    constructor(imgs: string[], des: string, est: EstadoIntervencion){
-        this.imagenesURL = imgs;
+    constructor(imgs: string, des: string, est: EstadoIntervencion){
+        this.imagenURL = imgs;
         this.descripcion = des;
         this.estado = est;
     }
 
-    public getImagenesURL(): string[]{
-        return this.imagenesURL;
+    public getImagenURL(): string{
+        return this.imagenURL;
     }
 
     public getDescripcion(): string{
@@ -26,8 +26,8 @@ export class Intervencion {
         return this.estado;
     }
 
-    public setImagenesURL(imgs: string[]): void{
-        this.imagenesURL = imgs;
+    public setImagenURL(imgs: string): void{
+        this.imagenURL = imgs;
     }
 
     public setDescripcio(des: string): void{
