@@ -34,6 +34,6 @@ export class GoogleStorage implements IStorageService {
             }
         })
         // retorna la url de la imagen almacenada
-        return (await bucket.file(imgData.substring(0, 21) + '.jpg').getSignedUrl({ action: 'read', expires: '12-31-2025' })).toString()
+        return (await bucket.file(num + imgData.substring(4, 10) + '.jpg').getSignedUrl({ action: 'read', expires: '12-31-2025' })).toString()
     }
 }
