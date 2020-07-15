@@ -9,11 +9,14 @@ import { CrudFactory } from 'src/models/persistencia/crud.factory';
 import { PedagogiaController } from './pedagogia/pedagogia.controller';
 import { PedagogiaModule } from 'src/models/pedagogia/pedagogia.module';
 import { PedagogiaService } from 'src/models/pedagogia/pedagogia.service';
+import { UsersController } from './users/users.controller';
+import { UsersModule } from 'src/models/users/users.module';
+import { UsersService } from 'src/models/users/users.service';
 
 @Module({
-  imports: [ArbolesModule, PedagogiaModule],
-  controllers: [ArbolesController, PedagogiaController],
+  imports: [ArbolesModule, PedagogiaModule, UsersModule],
+  controllers: [ArbolesController, PedagogiaController, UsersController],
   providers: [ArbolesService, StorageServiceFactoryService, 
-    VisionServiceFactoryService, PersistenciaService, CrudFactory, PedagogiaService]
+    VisionServiceFactoryService, PersistenciaService, CrudFactory, PedagogiaService, UsersService]
 })
 export class ControllerModule {}

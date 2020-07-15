@@ -42,4 +42,9 @@ export class CrudMongo<T> implements CRUD<T>{
         return <T>result;
     }
 
+    async findByParams(param1:string, value1: string, param2:string, value2: string): Promise<T[]>{        
+        let result = await this.collection.find({ "nickname" : value1, "password": value2}).toArray();
+        return <T[]>result;
+    }
+
 }

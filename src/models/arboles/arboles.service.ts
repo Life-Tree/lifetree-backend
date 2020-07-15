@@ -10,6 +10,7 @@ import { VISION_SERVICE } from '../vision-Service/constantes/serviceVision.enum'
 import { IStorageService } from '../storage-Service/interfaces/storageService.interface';
 import { STORAGE_SERVICE } from '../storage-Service/constantes/serviceStorage.enum';
 import { ResultMesagge } from './enums/enums';
+import { TABLA_NAME_ARBOL } from './consts/constantes';
 
 @Injectable()
 export class ArbolesService {
@@ -30,7 +31,7 @@ export class ArbolesService {
             const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.GOOGLE_STORAGE);
             let imagenURL = await storageService.uploadFile(img);
             nuevoArbol.setImagenURL(imagenURL);
-            let guardado = await this.persistencia.saveOne(nuevoArbol,CrudType.MONGODB,"arboles");
+            let guardado = await this.persistencia.saveOne(nuevoArbol,CrudType.MONGODB,TABLA_NAME_ARBOL);
             return guardado? ResultMesagge.EXITO : ResultMesagge.PROBLEMA_EN_BASE_DE_DATOS;
         }else{
             return ResultMesagge.NO_ES_ARBOL;
@@ -38,21 +39,21 @@ export class ArbolesService {
     }
 
     public async getArboles(): Promise<Arbol[]>{        
-        return await this.persistencia.getAll(CrudType.MONGODB, "arboles");
+        return await this.persistencia.getAll(CrudType.MONGODB, TABLA_NAME_ARBOL);
     }
 
     public async getArbol(id: string): Promise<Arbol>{
-        return await this.persistencia.getOne(id, CrudType.MONGODB, "arboles");
+        return await this.persistencia.getOne(id, CrudType.MONGODB, TABLA_NAME_ARBOL);
     }
 
     public async updateArbol(id: string, descripcion: string, img: string, lat: number, lon: number, barrio: string): Promise<boolean>{
         let ubicacion = new Ubicacion(lat,lon,barrio);
         let nuevoArbol = new Arbol(descripcion,img,ubicacion);
-        return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, "arboles");
+        return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, TABLA_NAME_ARBOL);
     }
 
     public async deleteArbol(id: string): Promise<boolean>{
-        return await this.persistencia.deleteOne(id, CrudType.MONGODB, "arboles");
+        return await this.persistencia.deleteOne(id, CrudType.MONGODB, TABLA_NAME_ARBOL);
     }
 
 }

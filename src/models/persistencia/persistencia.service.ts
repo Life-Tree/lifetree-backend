@@ -27,6 +27,11 @@ export class PersistenciaService <T> {
         return crud.findById(idItem);
     }
 
+    public getByParams(param1:string, value1:string, param2:string,  value2:string, typeCrud: CrudType, collectionName: string): Promise<T[]>{
+        let crud: CRUD<T> = this.crudFactory.createCRUD(typeCrud, collectionName);
+        return crud.findByParams(param1, value1,param2,value2);
+    }
+
     public updateOne(idItem: string, itemToUpdate: T,  typeCrud: CrudType, collectionName: string): Promise<boolean>{
         let crud: CRUD<T> = this.crudFactory.createCRUD(typeCrud, collectionName);
         return crud.update(idItem, itemToUpdate);

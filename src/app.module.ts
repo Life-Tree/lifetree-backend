@@ -9,6 +9,7 @@ import { VisionServiceModule } from './models/vision-Service/vision-service.modu
 import { ArbolesModule } from './models/arboles/arboles.module';
 import { PersistenciaModule } from './models/persistencia/persistencia.module';
 import { PedagogiaModule } from './models/pedagogia/pedagogia.module';
+import { UsersModule } from './models/users/users.module';
 
 @Module({
   imports: [
@@ -23,8 +24,10 @@ import { PedagogiaModule } from './models/pedagogia/pedagogia.module';
     VisionServiceModule,
     ArbolesModule,
     PersistenciaModule,
-    PedagogiaModule
+    PedagogiaModule,
+    UsersModule
   ],
+  providers: [],
 })
 export class AppModule {
   
