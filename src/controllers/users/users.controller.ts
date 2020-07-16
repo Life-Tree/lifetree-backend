@@ -10,7 +10,7 @@ export class UsersController {
 
     }
 
-    @Get("/valid")
+    @Post("/valid")
     async validarAdmin(@Body() nuevoAdmin: AdminDTO): Promise<Admin>{
         let result = await this.usersService.validarAdmin(nuevoAdmin.nickname,nuevoAdmin.password);
         return result;
@@ -20,8 +20,6 @@ export class UsersController {
     getAdmin(@Param('idAdmin') idAdmin: string): Promise<Admin>{
         return this.usersService.getAdmin(idAdmin);
     }
-
-    
 
     @Get()
     getAdmins(): Promise<Admin[]>{
