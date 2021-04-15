@@ -66,7 +66,6 @@ export class ArbolesService {
             nuevoArbol.setEstado(estado);
             return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, TABLA_NAME_ARBOL);
         }
-        
     }
 
     public async deleteArbol(id: string): Promise<boolean>{

@@ -15,7 +15,7 @@ async function bootstrap() {
   app.enableCors()
 
   //client = await MongoClient.connect(host.database().mongodb);
-  client = await MongoClient.connect(`mongodb+srv://tree:v0YzQrRGDecDGSQW@dblifetree-pn1er.gcp.mongodb.net/dblifetree?retryWrites=true&w=majority`);
+  client = await MongoClient.connect(`mongodb+srv://tree:LifeTreeV2@dblifetree-pn1er.gcp.mongodb.net/dblifetree?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
   db = client.db(config.get<string>('mongodb.name'));
   //app.listen(config.get<number>('port'));
   await app.listen(process.env.PORT || 3000);
