@@ -22,9 +22,9 @@ export class ArbolesController {
     }    
 
     @Post()
-    async crearArbol(@Body() arbol: ArbolDTO): Promise<string>{
-        let result = await this.arbolesManager.nuevoArbol(arbol.descripcion,arbol.imagenData,arbol.ubicacion.latitud,arbol.ubicacion.longitud, arbol.ubicacion.barrio);                
-        return result;
+    async crearArbol(@Body() arbol: ArbolDTO): Promise<string>{        
+        let result = await this.arbolesManager.nuevoArbol(arbol.descripcion,arbol.imagenData,arbol.ubicacion.latitud,arbol.ubicacion.longitud, arbol.ubicacion.barrio);
+        return result; 
     }
 
     @Put('/intervencion/:idArbol')

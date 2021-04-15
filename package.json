@@ -27,6 +27,7 @@
     "@nestjs/core": "^6.10.14",
     "@nestjs/platform-express": "^6.10.14",
     "@types/mongodb": "^3.6.12",
+    "cloudinary": "^1.25.1",
     "mongodb": "^3.6.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",

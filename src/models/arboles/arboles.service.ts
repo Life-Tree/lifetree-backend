@@ -26,11 +26,12 @@ export class ArbolesService {
         let ubicacion = new Ubicacion(lat,lon,barrio);
         let nuevoArbol = new Arbol(descripcion,img,ubicacion);        
         const visionService:IVisionService = this.visionServiceFactory.getVisionService(VISION_SERVICE.GOOGLE_VISION);               
-        let esArbol: boolean = await visionService.isTree(img);
+        let esArbol:boolean = true; //await visionService.isTree(img);
         console.log(esArbol);
         if(esArbol){
-            const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.GOOGLE_STORAGE);
-            let imagenURL = await storageService.uploadFile(img);
+            const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.CLOUDINARY_STORAGE);
+            //console.log(nuevoArbol);
+            let imagenURL = await storageService.uploadFile(img);            
             nuevoArbol.setImagenURL(imagenURL);
             let guardado = await this.persistencia.saveOne(nuevoArbol,CrudType.MONGODB,TABLA_NAME_ARBOL);
             return guardado? ResultMesagge.EXITO : ResultMesagge.PROBLEMA_EN_BASE_DE_DATOS;
@@ -52,7 +53,7 @@ export class ArbolesService {
         if(tipoUpdate == "ADD_INTERVENCION"){
             let ubicacion = new Ubicacion(lat,lon,barrio);
             let nuevoArbol = new Arbol(descripcion,img,ubicacion);
-            const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.GOOGLE_STORAGE);
+            const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.CLOUDINARY_STORAGE);
             let imgDataLastIntervencion = intervenciones[intervenciones.length-1].getImagenURL();
             let imgURLLastIntervencion = await storageService.uploadFile(imgDataLastIntervencion);
             intervenciones[intervenciones.length-1].setImagenURL(imgURLLastIntervencion);
