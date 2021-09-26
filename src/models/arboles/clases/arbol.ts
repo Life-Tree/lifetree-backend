@@ -1,5 +1,6 @@
 import { Ubicacion } from "./ubicacion";
 import { Intervencion } from "./intervencion";
+import { ImageSet } from "./imageset";
 
 export enum EstadoArbol{
     ENFERMO = "ENFERMO",
@@ -9,14 +10,14 @@ export enum EstadoArbol{
 
 export class Arbol {
     private descripcion: string;
-    private imagenURL: string;    
+    private imageSet: ImageSet;    
     private ubicacion: Ubicacion;
     private intervenciones: Intervencion[];
     private estado: EstadoArbol;
 
-    constructor(des: string, img: string ,ubic: Ubicacion){
+    constructor(des: string, ubic: Ubicacion, imageSet?: ImageSet ){
         this.descripcion = des;
-        this.imagenURL = img;
+        this.imageSet = imageSet;
         this.ubicacion = ubic;
         this.intervenciones = [];
         this.estado = EstadoArbol.ENFERMO;
@@ -26,8 +27,8 @@ export class Arbol {
         return this.descripcion;
     }
 
-    public getImagenURL(): string {
-        return this.imagenURL;
+    public getImageSet(): ImageSet {
+        return this.imageSet;
     }    
 
     public getUbicacion(): Ubicacion{
@@ -46,8 +47,8 @@ export class Arbol {
         this.descripcion = des;
     }
 
-    public setImagenURL(img: string) {
-        this.imagenURL = img;
+    public setImageSet(imgs: ImageSet) {
+        this.imageSet = imgs;
     }
 
     public setUbicacion(ubic: Ubicacion): void{

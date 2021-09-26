@@ -4,3 +4,10 @@ export enum ResultMesagge{
     PROBLEMA_EN_BASE_DE_DATOS= "PROBLEMA AL GUARDAR EN BASE DE DATOS",
     EXITO = "EL ARBOL SE HA GUARDADO CORRECTAMENTE"
 }
+
+export enum Frame{
+    RAIZ = "RAIZ",
+    TRONCO = "TRONCO",
+    RAMAS = "RAMAS",
+    HOJAS = "HOJAS"
+}
