@@ -12,6 +12,8 @@ import { STORAGE_SERVICE } from '../storage-Service/constantes/serviceStorage.en
 import { ResultMesagge } from './enums/enums';
 import { TABLA_NAME_ARBOL } from './consts/constantes';
 import { Intervencion } from './clases/intervencion';
+import { ImageSet } from './clases/imageset';
+import { Image } from './clases/image';
 
 @Injectable()
 export class ArbolesService {
@@ -22,17 +24,14 @@ export class ArbolesService {
 
     }
 
-    public async nuevoArbol(descripcion: string, img: string, lat: number, lon: number, barrio: string): Promise<string>{
+    public async nuevoArbol(descripcion: string, images: ImageSet, lat: number, lon: number, barrio: string): Promise<string>{
         let ubicacion = new Ubicacion(lat,lon,barrio);
-        let nuevoArbol = new Arbol(descripcion,img,ubicacion);        
+        let nuevoArbol = new Arbol(descripcion, ubicacion, images);        
         const visionService:IVisionService = this.visionServiceFactory.getVisionService(VISION_SERVICE.GOOGLE_VISION);               
         let esArbol:boolean = true; //await visionService.isTree(img);
         console.log(esArbol);
         if(esArbol){
-            const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.CLOUDINARY_STORAGE);
-            //console.log(nuevoArbol);
-            let imagenURL = await storageService.uploadFile(img);            
-            nuevoArbol.setImagenURL(imagenURL);
+            nuevoArbol = await this.preProcessArbolImages(nuevoArbol);
             let guardado = await this.persistencia.saveOne(nuevoArbol,CrudType.MONGODB,TABLA_NAME_ARBOL);
             return guardado? ResultMesagge.EXITO : ResultMesagge.PROBLEMA_EN_BASE_DE_DATOS;
         }else{
@@ -48,21 +47,18 @@ export class ArbolesService {
         return await this.persistencia.getOne(id, CrudType.MONGODB, TABLA_NAME_ARBOL);
     }
 
-    public async updateArbol(id: string, descripcion: string, img: string, lat: number, lon: number, barrio: string,
-        estado: EstadoArbol ,intervenciones: Intervencion[], tipoUpdate:"ADD_INTERVENCION"|"OTRO" ): Promise<boolean>{
-        if(tipoUpdate == "ADD_INTERVENCION"){
+    public async updateArbol(id: string, descripcion: string, images: ImageSet, lat: number, lon: number, barrio: string,
+        estado: EstadoArbol ,intervenciones: Intervencion[], tipoUpdate:"IMAGE_CHANGE"|"NO_IMAGE_CHANGE" ): Promise<boolean>{
+        if(tipoUpdate == "IMAGE_CHANGE"){
             let ubicacion = new Ubicacion(lat,lon,barrio);
-            let nuevoArbol = new Arbol(descripcion,img,ubicacion);
-            const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.CLOUDINARY_STORAGE);
-            let imgDataLastIntervencion = intervenciones[intervenciones.length-1].getImagenURL();
-            let imgURLLastIntervencion = await storageService.uploadFile(imgDataLastIntervencion);
-            intervenciones[intervenciones.length-1].setImagenURL(imgURLLastIntervencion);
+            let nuevoArbol = new Arbol(descripcion,ubicacion, images);
             nuevoArbol.setIntervenciones(intervenciones);
+            nuevoArbol = await this.preProcessArbolImages(nuevoArbol);
             nuevoArbol.setEstado(estado);
             return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, TABLA_NAME_ARBOL);
         }else{
             let ubicacion = new Ubicacion(lat,lon,barrio);
-            let nuevoArbol = new Arbol(descripcion,img,ubicacion);
+            let nuevoArbol = new Arbol(descripcion,ubicacion, images);
             nuevoArbol.setIntervenciones(intervenciones);
             nuevoArbol.setEstado(estado);
             return await this.persistencia.updateOne(id,nuevoArbol,CrudType.MONGODB, TABLA_NAME_ARBOL);
@@ -71,6 +67,41 @@ export class ArbolesService {
 
     public async deleteArbol(id: string): Promise<boolean>{
         return await this.persistencia.deleteOne(id, CrudType.MONGODB, TABLA_NAME_ARBOL);
+    }
+
+    private async preProcessArbolImages(nuevoArbol: Arbol): Promise<Arbol> {         
+        const storageService:IStorageService = this.storageServiceFactory.getSorageService(STORAGE_SERVICE.CLOUDINARY_STORAGE);        
+        let allImages: Image[] = nuevoArbol.getImageSet().images;
+        let allImagesNew: Image[] = [];
+
+        for (const img of allImages){
+            if(img.base64 != ""){
+                img.url = await storageService.uploadFile(img.base64);
+                img.base64 = "";                
+            }
+            allImagesNew.push(img);
+        }
+
+        nuevoArbol.setImageSet(new ImageSet(allImagesNew));
+
+        let intervenciones: Intervencion[] = nuevoArbol.getIntervenciones();    
+        
+        for (let [index, inter] of intervenciones.entries()){            
+            let allInterImages: Image[] = inter.imageSet.images;        
+            let allInterImagesNew: Image[] = [];
+            for (const img of allInterImages){
+                if(img.base64 != ""){
+                    img.url = await storageService.uploadFile(img.base64);
+                    img.base64 = "";                
+                }
+                allInterImagesNew.push(img);
+            }
+            inter.imageSet = new ImageSet(allInterImagesNew);
+            intervenciones[index] = inter;
+        }
+
+        nuevoArbol.setIntervenciones(intervenciones);
+        return nuevoArbol;
     }
 
 }
