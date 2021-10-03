@@ -12,11 +12,12 @@ import { PedagogiaService } from 'src/models/pedagogia/pedagogia.service';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from 'src/models/users/users.module';
 import { UsersService } from 'src/models/users/users.service';
+import { DaoMapper } from 'src/models/arboles/mappers/DaoMapper';
 
 @Module({
   imports: [ArbolesModule, PedagogiaModule, UsersModule],
   controllers: [ArbolesController, PedagogiaController, UsersController],
   providers: [ArbolesService, StorageServiceFactoryService, 
-    VisionServiceFactoryService, PersistenciaService, CrudFactory, PedagogiaService, UsersService]
+    VisionServiceFactoryService, PersistenciaService, CrudFactory, PedagogiaService, UsersService, DaoMapper]
 })
 export class ControllerModule {}

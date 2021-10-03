@@ -4,8 +4,8 @@ import { Command, Update } from "../update";
 
 export class CreateUpdatesCollection implements Command{
 
-    execute(): void {
-        this.verifyCommandExecution().then( (executed) => {
+    async execute(): Promise<void> {
+        await this.verifyCommandExecution().then( (executed) => {
             if (!executed){
                 db.createCollection('Updates').then( (d) => {
                     this.register();

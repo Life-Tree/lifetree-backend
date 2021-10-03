@@ -17,7 +17,7 @@ async function bootstrap() {
 
   client = await MongoClient.connect(host.database().mongodb, { useNewUrlParser: true, useUnifiedTopology: true });
   db = client.db(config.get<string>('mongodb.name'));
-  update();
+  await update();
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

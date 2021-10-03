@@ -8,8 +8,8 @@ import { Intervencion } from "src/models/arboles/clases/intervencion";
 
 export class UpdateArbolesSchema implements Command{
 
-    execute(): void {
-        this.verifyCommandExecution().then( (executed) => {
+    async execute(): Promise<void> {
+        await this.verifyCommandExecution().then( (executed) => {
             if (!executed){
                 db.collection('arboles').find().toArray().then ( (result) => {
                     for (const tree of result){
