@@ -5,10 +5,10 @@ import { Command, Update } from "../update";
 export class CreateUpdatesCollection implements Command{
 
     async execute(): Promise<void> {
-        await this.verifyCommandExecution().then( (executed) => {
+        await this.verifyCommandExecution().then( async (executed) => {
             if (!executed){
-                db.createCollection('Updates').then( (d) => {
-                    this.register();
+                await db.createCollection('Updates').then( async (d) => {
+                    await this.register();
                 });
             }
         });

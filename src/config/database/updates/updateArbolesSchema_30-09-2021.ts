@@ -9,9 +9,9 @@ import { Intervencion } from "src/models/arboles/clases/intervencion";
 export class UpdateArbolesSchema implements Command{
 
     async execute(): Promise<void> {
-        await this.verifyCommandExecution().then( (executed) => {
+        await this.verifyCommandExecution().then( async (executed) => {
             if (!executed){
-                db.collection('arboles').find().toArray().then ( (result) => {
+                await db.collection('arboles').find().toArray().then ( async (result) => {
                     for (const tree of result){
                         if( tree.imagenURL != undefined && tree.imagenURL != null && tree.imagenURL != ''){
                             
@@ -27,10 +27,10 @@ export class UpdateArbolesSchema implements Command{
                             }
                             arbol.setIntervenciones(intervenciones);
                             arbol.setEstado(tree.estado);                          
-                            db.collection('arboles').replaceOne({ "_id": tree._id }, arbol, { upsert: true });
+                            await db.collection('arboles').replaceOne({ "_id": tree._id }, arbol, { upsert: true });
                         }                     
                     }                 
-                    this.register();
+                    await this.register();
                 });
             }
         });
