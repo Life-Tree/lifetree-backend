@@ -25,19 +25,19 @@ export class CreateSpeciesCollection implements Command{
     }
 
     async execute(): Promise<void> {
-        await this.verifyCommandExecution().then( (executed) => {
+        await this.verifyCommandExecution().then( async (executed) => {
             if (!executed){
-                this.collectionExists('Species').then ( (exists: boolean) => {
+                await this.collectionExists('Species').then ( async (exists: boolean) => {
                     this.populateSpeciesList();
                     if (!exists){
-                        db.createCollection<Species>('Species').then ( (result) => {
-                            result.insertMany(this.species).then (()=>{
-                                this.register();
+                        await db.createCollection<Species>('Species').then ( async (result) => {
+                            await result.insertMany(this.species).then (async ()=>{
+                                await this.register();
                             });                            
                         });
                     } else {
-                        db.collection<Species>('Species').insertMany(this.species).then(() => {
-                            this.register();
+                        await db.collection<Species>('Species').insertMany(this.species).then(async () => {
+                            await this.register();
                         });
                     }
                 });                

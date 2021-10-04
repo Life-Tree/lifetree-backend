@@ -11,15 +11,15 @@ export class InsertDefaultSpecies implements Command{
     }
 
     async execute(): Promise<void> {
-        await this.verifyCommandExecution().then( (executed) => {
+        await this.verifyCommandExecution().then( async (executed) => {
             if (!executed){        
-                db.collection('Species').findOne({ "name": 'unknown' }).then((species) => {
-                    db.collection('arboles').find().toArray().then((result) => {
+                await db.collection('Species').findOne({ "name": 'unknown' }).then(async (species) => {
+                    await db.collection('arboles').find().toArray().then(async (result) => {
                         for (const tree of result ){
                             tree.species = species._id;
-                            db.collection('arboles').replaceOne({ "_id": tree._id }, tree, { upsert: true });
+                            await db.collection('arboles').replaceOne({ "_id": tree._id }, tree, { upsert: true });
                         }
-                        this.register();
+                        await this.register();
                     });
                 });             
             }
