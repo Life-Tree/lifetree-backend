@@ -1,5 +1,8 @@
 import { Ubicacion } from "./ubicacion";
 import { Intervencion } from "./intervencion";
+import { ImageSet } from "./imageset";
+import { Species } from "./especie";
+import { DEFAULT_FAMILY, DEFAULT_SPECIES, DEFAULT_SCIENT_NAME } from "../consts/constantes";
 
 export enum EstadoArbol{
     ENFERMO = "ENFERMO",
@@ -8,26 +11,33 @@ export enum EstadoArbol{
 }
 
 export class Arbol {
+    private _id?: string;
     private descripcion: string;
-    private imagenURL: string;    
+    private imageSet: ImageSet;    
     private ubicacion: Ubicacion;
     private intervenciones: Intervencion[];
     private estado: EstadoArbol;
+    private species: Species;
 
-    constructor(des: string, img: string ,ubic: Ubicacion){
+    constructor(des: string, ubic: Ubicacion, imageSet?: ImageSet ){
         this.descripcion = des;
-        this.imagenURL = img;
+        this.imageSet = imageSet;
         this.ubicacion = ubic;
         this.intervenciones = [];
         this.estado = EstadoArbol.ENFERMO;
+        this.species = new Species(DEFAULT_SPECIES, DEFAULT_SCIENT_NAME, DEFAULT_FAMILY);
+    }
+
+    public get_Id(): string {
+        return this._id;
     }
 
     public getDescripcion(): string{
         return this.descripcion;
     }
 
-    public getImagenURL(): string {
-        return this.imagenURL;
+    public getImageSet(): ImageSet {
+        return this.imageSet;
     }    
 
     public getUbicacion(): Ubicacion{
@@ -42,12 +52,16 @@ export class Arbol {
         return this.estado;
     }
 
+    public getSpecies(): Species{
+        return this.species;
+    }
+
     public setDescripcion(des: string): void{
         this.descripcion = des;
     }
 
-    public setImagenURL(img: string) {
-        this.imagenURL = img;
+    public setImageSet(imgs: ImageSet) {
+        this.imageSet = imgs;
     }
 
     public setUbicacion(ubic: Ubicacion): void{
@@ -64,6 +78,14 @@ export class Arbol {
 
     public setEstado(est: EstadoArbol): void{
         this.estado = est;
+    }
+
+    public setSpecies(species: Species): void {
+        this.species = species;
+    }
+
+    public set_Id(id: string): void {
+        this._id = id;
     }
 
 }
