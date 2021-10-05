@@ -4,18 +4,29 @@ import { Injectable } from "@nestjs/common";
 import { CrudType } from "./constantes/consts";
 
 
-
 @Injectable()
 export class CrudFactory <T>{
+
+    public crudsCreated: Map<string, CRUD<T>> = new Map<string, CRUD<T>>();
 
     public createCRUD(type: CrudType, tablaName: string): CRUD<T>{
         let crud: CRUD<T>;
         switch(type){
             case CrudType.MONGODB:
-                crud = new CrudMongo<T>(tablaName);
+                if(this.crudsCreated.has(type.toString()+':'+tablaName)){
+                    crud = this.crudsCreated.get(type.toString()+':'+tablaName);
+                }else{
+                    crud = new CrudMongo<T>(tablaName);
+                    this.crudsCreated.set(type.toString()+':'+tablaName,crud);
+                }                
                 break;
             default:
-                crud = new CrudMongo<T>(tablaName);
+                if(this.crudsCreated.has(type.toString()+':'+tablaName)){
+                    crud = this.crudsCreated.get(type.toString()+':'+tablaName);
+                }else{
+                    crud = new CrudMongo<T>(tablaName);
+                    this.crudsCreated.set(type.toString()+':'+tablaName,crud);
+                } 
                 break;
         }
         return crud;
