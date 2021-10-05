@@ -1,33 +1,35 @@
+import { ImageSet } from "./imageset";
+
 export enum EstadoIntervencion{
     PENDIENTE = "PENDIENTE",
     APROBADA = "APROBADA",
     RECHAZADA = "RECHAZADA",
 }
 export class Intervencion {
-    private imagenURL: string;
+    public imageSet: ImageSet;
     private descripcion: string;
     private estado: EstadoIntervencion;
 
-    constructor(imgs: string, des: string, est: EstadoIntervencion){
-        this.imagenURL = imgs;
+    constructor(imgs: ImageSet, des: string, est: EstadoIntervencion){
+        this.imageSet = imgs;
         this.descripcion = des;
         this.estado = est;
     }
 
-    public getImagenURL(): string{
-        return this.imagenURL;
+    public getImageSet(): ImageSet{
+        return this.imageSet;
     }
 
     public getDescripcion(): string{
         return this.descripcion;
     }
 
-    public getEstaso(): EstadoIntervencion{
+    public getEstado(): EstadoIntervencion{
         return this.estado;
     }
 
-    public setImagenURL(imgs: string): void{
-        this.imagenURL = imgs;
+    public setImageSet(imgs: ImageSet): void{
+        this.imageSet = imgs;
     }
 
     public setDescripcio(des: string): void{

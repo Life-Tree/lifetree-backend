@@ -8,10 +8,11 @@ import { VisionServiceModule } from '../vision-Service/vision-service.module';
 import { StorageServiceFactoryService } from '../storage-Service/storageServiceFactory.service';
 import { VisionServiceFactoryService } from '../vision-Service/visionServiceFactory.service';
 import { Arbol } from './clases/arbol';
+import { DaoMapper } from './mappers/DaoMapper';
 
 @Module({
   imports: [PersistenciaModule, StorageServiceModule, VisionServiceModule],
-  providers: [ArbolesService, PersistenciaService, CrudFactory, StorageServiceFactoryService, VisionServiceFactoryService],
+  providers: [ArbolesService, DaoMapper, PersistenciaService, CrudFactory, StorageServiceFactoryService, VisionServiceFactoryService],
   exports: [ArbolesService]
 })
 export class ArbolesModule {}
