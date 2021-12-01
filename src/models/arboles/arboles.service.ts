@@ -54,7 +54,7 @@ export class ArbolesService {
     }
 
     public async getArbol(id: string): Promise<Arbol>{
-        let dao = await this.persistencia.getOne(id, CrudType.MONGODB, TABLA_NAME_ARBOL);
+        let dao = await this.persistencia.getOne(id, CrudType.MONGODB, TABLA_NAME_ARBOL);        
         return this.mapperService.daoToModel(dao);
     }
 
