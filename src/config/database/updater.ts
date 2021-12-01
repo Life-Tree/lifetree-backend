@@ -4,6 +4,7 @@ import { CreateUpdatesCollection } from "./updates/createUpdatesCollection_28-09
 import { InsertDefaultSpecies } from "./updates/insertDefaultSpecies_02-10-2021";
 import { InsertNewSpecies } from "./updates/insertNewSpecies_09-10-2021";
 import { UpdateArbolesSchema } from "./updates/updateArbolesSchema_30-09-2021";
+import { UpdateImageSetFrame } from "./updates/updateImageSetFrame_30-11-2021";
 
 export async function update(): Promise<void>{
     await new CreateUpdatesCollection().execute();
@@ -12,4 +13,5 @@ export async function update(): Promise<void>{
     await new CreateDefaultSpecies().execute();
     await new InsertDefaultSpecies().execute();
     await new InsertNewSpecies().execute();
+    await new UpdateImageSetFrame().execute();
 }

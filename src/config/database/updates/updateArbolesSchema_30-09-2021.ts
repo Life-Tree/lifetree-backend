@@ -16,12 +16,12 @@ export class UpdateArbolesSchema implements Command{
                         if( tree.imagenURL != undefined && tree.imagenURL != null && tree.imagenURL != ''){
                             
                             let imageSet: ImageSet = new ImageSet();
-                            imageSet.addImage({frame: Frame.TRONCO, url: tree.imagenURL, base64: ''});                        
+                            imageSet.addImage({frame: Frame.TALLO, url: tree.imagenURL, base64: ''});                        
                             let arbol: Arbol = new Arbol(tree.descripcion, tree.ubicacion, imageSet);
                             let intervenciones: Intervencion[] = [];
                             for (const inter of tree.intervenciones){
                                 imageSet = new ImageSet();
-                                imageSet.addImage({frame: Frame.TRONCO, url: inter.imagenURL, base64: ''});
+                                imageSet.addImage({frame: Frame.TALLO, url: inter.imagenURL, base64: ''});
                                 let intervencion: Intervencion = new Intervencion(imageSet, inter.descripcion, inter.estado);
                                 intervenciones.push(intervencion);
                             }

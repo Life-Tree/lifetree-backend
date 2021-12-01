@@ -25,7 +25,7 @@ export class CreateDefaultSpecies implements Command{
     async execute(): Promise<void> {
         await this.verifyCommandExecution().then( async (executed) => {
             if (!executed){
-                let collection = db.collection<Species>('Species');
+                let collection = db.collection('Species');
                 await collection.findOne({ "name": 'unknown' }).then (async ( value: Species) => {
                     if (value == null){
                         await collection.insertOne(new Species('unknown', 'unknown', 'unknown')).then(async () => {

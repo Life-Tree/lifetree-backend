@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { ObjectId } from "bson";
 import { CrudType } from "src/models/persistencia/constantes/consts";
 import { PersistenciaService } from "src/models/persistencia/persistencia.service";
 import { Arbol } from "../clases/arbol";
@@ -25,11 +26,12 @@ export class DaoMapper{
     }
 
     public async daoToModel(dao: ArbolDao): Promise<Arbol> {
-        let model: Arbol = new Arbol(dao.descripcion, dao.ubicacion, dao.imageSet);
+        let model: Arbol = new Arbol(dao.descripcion, dao.ubicacion, dao.imageSet);        
         model.set_Id(dao._id.toHexString());
         model.setEstado(dao.estado);
         model.setIntervenciones(dao.intervenciones);
-        let species = await this.persistencia.getOne(dao.species.toHexString(), CrudType.MONGODB, TABLA_NAME_SPECIES);
+        let spId: {_id: ObjectId} = dao.species as any
+        let species = await this.persistencia.getOne(spId._id ? spId._id.toHexString() : dao.species.toHexString(), CrudType.MONGODB, TABLA_NAME_SPECIES);
         model.setSpecies(species);
         return model;        
     }
@@ -41,7 +43,8 @@ export class DaoMapper{
             model.set_Id(dao._id.toHexString());
             model.setEstado(dao.estado);
             model.setIntervenciones(dao.intervenciones);
-            let species = await this.persistencia.getOne(dao.species.toHexString(), CrudType.MONGODB, TABLA_NAME_SPECIES);
+            let spId: {_id: ObjectId} = dao.species as any
+            let species = await this.persistencia.getOne(spId._id ? spId._id.toHexString() : dao.species.toHexString(), CrudType.MONGODB, TABLA_NAME_SPECIES);
             model.setSpecies(species);
             arboles.push(model);
         }
