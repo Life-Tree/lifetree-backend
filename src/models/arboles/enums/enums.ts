@@ -7,7 +7,9 @@ export enum ResultMesagge{
 
 export enum Frame{
     RAIZ = "RAIZ",
-    TRONCO = "TRONCO",
-    RAMAS = "RAMAS",
-    HOJAS = "HOJAS"
+    TALLO = "TALLO",
+    HOJAS = "HOJAS",
+    FLOR = "FLOR",
+    FRUTO = "FRUTO",
+    PARTE_ENFERMA = "PARTE_ENFERMA"
 }
