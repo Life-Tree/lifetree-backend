@@ -10,6 +10,7 @@ import { ArbolesModule } from './models/arboles/arboles.module';
 import { PersistenciaModule } from './models/persistencia/persistencia.module';
 import { PedagogiaModule } from './models/pedagogia/pedagogia.module';
 import { UsersModule } from './models/users/users.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { UsersModule } from './models/users/users.module';
     ArbolesModule,
     PersistenciaModule,
     PedagogiaModule,
-    UsersModule
+    UsersModule,
+    ReportsModule
   ],
   providers: [],
 })
