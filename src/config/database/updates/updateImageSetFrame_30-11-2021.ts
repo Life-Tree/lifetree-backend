@@ -1,5 +1,4 @@
 import { db } from "src/main";
-import { Arbol } from "src/models/arboles/clases/arbol";
 import { ImageSet } from "src/models/arboles/clases/imageset";
 import { Command, Update } from "../update";
 import { Frame } from "src/models/arboles/enums/enums";
@@ -16,9 +15,10 @@ export class UpdateImageSetFrame implements Command{
     }
 
     async execute(): Promise<void> {
+        
         await this.verifyCommandExecution().then( async (executed) => {
             if (!executed){
-                await db.collection('arboles').find().toArray().then ( async (result) => {
+                await db.collection('arboles').find().toArray().then ( async (result) => {                    
                     for (const tree of result){
                         if(tree.imageSet != null && tree.imageSet.images != undefined && tree.imageSet.images.length > 0){
                             
@@ -32,7 +32,7 @@ export class UpdateImageSetFrame implements Command{
                                 }                                
                                 imageSet.addImage({frame: img.frame, url: img.url, base64: img.base64})
                             }                       
-                            let arbol: Arbol = new Arbol(tree.descripcion, tree.ubicacion, imageSet);
+                            tree.imageSet = imageSet;
                             let intervenciones: Intervencion[] = [];
                             for (const inter of tree.intervenciones){
                                 let imgSet = new ImageSet();
@@ -48,9 +48,8 @@ export class UpdateImageSetFrame implements Command{
                                 let intervencion: Intervencion = new Intervencion(imgSet, inter.descripcion, inter.estado);
                                 intervenciones.push(intervencion);
                             }
-                            arbol.setIntervenciones(intervenciones);
-                            arbol.setEstado(tree.estado);                      
-                            await db.collection('arboles').replaceOne({ "_id": tree._id }, arbol, { upsert: true });
+                            tree.intervenciones = intervenciones;                    
+                            await db.collection('arboles').replaceOne({ "_id": tree._id }, tree, { upsert: true });
                         }                     
                     }                 
                     await this.register();

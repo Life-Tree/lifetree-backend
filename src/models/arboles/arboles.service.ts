@@ -32,11 +32,11 @@ export class ArbolesService {
     public async nuevoArbol(descripcion: string, images: ImageSet, lat: number, lon: number, barrio: string, species?: Species): Promise<string>{
         let ubicacion = new Ubicacion(lat,lon,barrio);
         let nuevoArbol = new Arbol(descripcion, ubicacion, images);
-        if (species != null){
+        if (species != null){ // TODO Set unknown species when species be null
             nuevoArbol.setSpecies(species);
         }       
-        //const visionService:IVisionService = this.visionServiceFactory.getVisionService(VISION_SERVICE.GOOGLE_VISION);               
-        let esArbol:boolean = true; //await visionService.isTree(img);
+        //TODO const visionService:IVisionService = this.visionServiceFactory.getVisionService(VISION_SERVICE.GOOGLE_VISION);               
+        let esArbol:boolean = true; //TODO await visionService.isTree(img);
         console.log(esArbol);
         if(esArbol){
             nuevoArbol = await this.preProcessArbolImages(nuevoArbol);
