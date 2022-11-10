@@ -11,9 +11,7 @@ export enum TreePart{
     STEM = 3,       
     FRUIT = 4,
     FLOWER = 5,
-    WHOLE = 6,
-    AFFECTED_PART = 7
-    
+    WHOLE = 6
 }
 
 export enum HealthStatusEnum{

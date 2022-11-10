@@ -1,0 +1,1 @@
+export const MATERIAL_TABLE_NAME = 'materials';
