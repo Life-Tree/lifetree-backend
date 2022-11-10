@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, ValidationPipe } from "@nestjs/common";
-import { ValidateNested } from "class-validator";
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from "@nestjs/common";
 import { Condition } from "src/reports/core/domain/condition";
 import { Report } from "src/reports/core/domain/report";
 import { SignSymptom } from "src/reports/core/domain/signsymptom";
