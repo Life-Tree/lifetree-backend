@@ -4,7 +4,9 @@ import { MaterialEntity, MaterialEntityMapper } from "./entities/material.entity
 import { Db, Collection, InsertOneWriteOpResult, ObjectId, WriteOpResult, ReplaceWriteOpResult } from "mongodb";
 import { db } from "src/main";
 import { MATERIAL_TABLE_NAME } from "../constants";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class MongoMaterialRepository implements IMaterialRepository{
     private materialsCollection: Collection;
     private db: Db;

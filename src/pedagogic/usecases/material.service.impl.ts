@@ -27,7 +27,9 @@ export class MaterialServiceImpl implements IMaterialService{
         material.setSegments(segments);
         return this.materialRepo.save(material);
     }
-    public updateMaterial(material: Material): Promise<Material> {
+    public async updateMaterial(material: Material): Promise<Material> {
+        const segments = await this.saveSegmentFiles(material.getSegments());
+        material.setSegments(segments);
         return this.materialRepo.update(material);
     }
 
