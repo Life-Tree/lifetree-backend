@@ -11,6 +11,7 @@ import { PersistenciaModule } from './models/persistencia/persistencia.module';
 import { PedagogiaModule } from './models/pedagogia/pedagogia.module';
 import { UsersModule } from './models/users/users.module';
 import { ReportsModule } from './reports/reports.module';
+import { PedagogicModule } from './pedagogic/pedagogic.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { ReportsModule } from './reports/reports.module';
     PersistenciaModule,
     PedagogiaModule,
     UsersModule,
-    ReportsModule
+    ReportsModule,
+    PedagogicModule
   ],
   providers: [],
 })
