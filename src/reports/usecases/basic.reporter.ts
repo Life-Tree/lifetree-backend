@@ -33,8 +33,10 @@ export class BasicReporter implements IReporter {
         report.getReportedTree().getHealthStatus().setReportedSignSymptoms(savedReportedSignSymptoms);
         
         // Diagnosis
-        const diagnosis: Diagnosis = await this.diagnostician.diagnose(report.getReportedTree().getHealthStatus().getReportedSignSymptoms());
-        report.getReportedTree().getHealthStatus().setDiagnosis(diagnosis);
+        if(report.getReportedTree().getHealthStatus().getDiagnosis() == null) {
+            const diagnosis: Diagnosis = await this.diagnostician.diagnose(report.getReportedTree().getHealthStatus().getReportedSignSymptoms());
+            report.getReportedTree().getHealthStatus().setDiagnosis(diagnosis);
+        }       
         
         // Save tree
         const savedTree: Tree = await this.treeRepository.saveTree(report.getReportedTree());
