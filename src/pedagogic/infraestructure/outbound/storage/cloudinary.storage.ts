@@ -13,7 +13,7 @@ export class CloudinaryStorage implements IStorage{
 		});
     }
     async saveFile(base64: string): Promise<string> {
-        const { url } = await cloudinary.v2.uploader.upload(base64);
-		return url;
+        const { secure_url } = await cloudinary.v2.uploader.upload(base64);
+		return secure_url;
     }
 }

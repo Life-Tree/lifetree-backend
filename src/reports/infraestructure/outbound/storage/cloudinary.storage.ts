@@ -15,7 +15,7 @@ export class CloudinaryStorage implements IStorage{
     }
 
     async saveImage(imageB64: string): Promise<string> {
-        const { url } = await cloudinary.v2.uploader.upload(imageB64);
-		return url;
+        const { secure_url } = await cloudinary.v2.uploader.upload(imageB64);
+		return secure_url;
     }
 }
