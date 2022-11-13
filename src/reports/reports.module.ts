@@ -23,25 +23,71 @@ import { DiagnosisDtoMapper } from './infraestructure/inbound/dtos/diagnosis.dto
 import { ReportedSignSymptomDtoMapper } from './infraestructure/inbound/dtos/reportedsignsymptom.dto';
 import { HealthStatusDtoMapper } from './infraestructure/inbound/dtos/healthstatus.dto';
 import { TreeDtoMapper } from './infraestructure/inbound/dtos/tree.dto';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
+    imports: [UsersModule],
     providers: [
         SpecieEntityMapper, 
         SignSymptomEntityMapper,
         SignSymptomRepository,
+        {
+            provide: 'SignSymptomRepository',
+            useClass: SignSymptomRepository,
+        },
         SpeciesRepository,
+        {
+            provide: 'SpeciesRepository',
+            useClass: SpeciesRepository,
+        },
         ConditionEntityMapper,
-        ConditionsRepository,         
+        ConditionsRepository,   
+        {
+            provide: 'ConditionsRepository',
+            useClass: ConditionsRepository,
+        },      
         TreeEntityMapper,
         TreeRepository,
+        {
+            provide: 'TreeRepository',
+            useClass: TreeRepository,
+        }, 
         ReportEntityMapper,  
-        ReportRepository,               
+        ReportRepository,    
+        {
+            provide: 'ReportRepository',
+            useClass: ReportRepository,
+        },           
         ReportFinderImpl,
+        {
+            provide: 'ReportFinderImpl',
+            useClass: ReportFinderImpl,
+        },
         GoogleVision,
+        {
+            provide: 'GoogleVision',
+            useClass: GoogleVision,
+        },
         GoogleStorage,
+        {
+            provide: 'GoogleStorage',
+            useClass: GoogleStorage,
+        },
         CloudinaryStorage,
+        {
+            provide: 'CloudinaryStorage',
+            useClass: CloudinaryStorage,
+        },
         BasicDiagnostician,
+        {
+            provide: 'BasicDiagnostician',
+            useClass: BasicDiagnostician,
+        },
         BasicReporter,
+        {
+            provide: 'BasicReporter',
+            useClass: BasicReporter,
+        },
         SignSymptomDtoMapper,
         ConditionDtoMapper,
         DiagnosisDtoMapper,

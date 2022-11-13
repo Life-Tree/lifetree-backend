@@ -1,1 +1,0 @@
-export const TABLA_NAME_ADMIN = "admins";
