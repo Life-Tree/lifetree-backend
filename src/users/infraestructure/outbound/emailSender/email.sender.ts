@@ -10,7 +10,7 @@ export class EmailSenderNodeMailer implements IEmailSender{
     async sendEmail(user: User, activationUrl: string): Promise<boolean> {
         await this.mailerService.sendMail({
             to: user.getEmail(),
-            // from: '"Support Team" <support@example.com>', // override default from
+            from: '"Ebano App" <ebanoinfomation@gmail.com>', // override default from
             subject: '¡Bienvenido a Ebano App! Confirma tu email',
             template: './confirmation', // `.hbs` extension is appended automatically
             context: { // ✏️ filling curly brackets with content
