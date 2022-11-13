@@ -37,11 +37,11 @@ import { PermissionGuard } from './infraestructure/inbound/middleware/authorizat
     imports: [
         MailerModule.forRoot({
             transport: {
-              host: 'smtp.sendgrid.net',
+              host: process.env.SENDGRID_HOST,
               secure: false,
               auth: {
-                user: 'apikey',
-                pass: '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',
+                user: process.env.SENDGRID_USER,
+                pass: process.env.SENDGRID_PASS,
               },
             },
             defaults: {
