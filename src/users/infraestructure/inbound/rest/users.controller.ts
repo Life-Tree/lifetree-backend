@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Param, UseGuards, Request } from "@nestjs/common";
 import { User } from "src/users/core/domain/user";
 import { JwtAuthGuard } from "../middleware/authentication/jwt.guard";
 import { RequirePermissions } from "../middleware/authorization/authorizer.decorator";
@@ -19,4 +19,13 @@ export class UsersController {
     async getUsersByRoleName(@Param('roleName') roleName: string): Promise<User[]> {
         return this.userService.getUsersByRoleName(roleName);
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('own')
+    async getOwnUser(@Request() req): Promise<User> {
+        const userId: string = req?.user?.userId;
+        return this.userService.getUserById(userId);
+    }
+
+    
 }

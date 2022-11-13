@@ -20,11 +20,17 @@ export class LoginVisitor implements IVisitor{
         if(!userPassCredentialFromDb) {
             response.set('status', 0);
             response.set('user', null);
-            response.set('reason', 'User not registered');
+            response.set('reason', 'Usuario no registrado');
+            return response;
+        }
+        const user: User = await this.userRepo.findByEmail(userPassCredential.getEmail());
+        if(!userPassCredentialFromDb.isActive()){
+            response.set('status', 0);
+            response.set('user', user);
+            response.set('reason', 'Se requiere confirmación del email');
             return response;
         }
         const canAccess: boolean = userPassCredentialFromDb && userPassCredentialFromDb.isActive() && await this.encoder.compare(userPassCredential.getPassword(), userPassCredentialFromDb.getPassword());
-        const user: User = await this.userRepo.findByEmail(userPassCredential.getEmail());
         if(canAccess){
             response.set('status', 1);
             response.set('user', user);
@@ -32,7 +38,7 @@ export class LoginVisitor implements IVisitor{
         }
         response.set('status', 0);
         response.set('user', user);
-        response.set('reason', 'Require confirm email account');
+        response.set('reason', 'El email o contraseña son incorrectas');
         return response;
     }
 }
