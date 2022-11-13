@@ -32,16 +32,17 @@ import { RegisterDtoMapper } from './infraestructure/inbound/dtos/register.dto';
 import { UsersController } from './infraestructure/inbound/rest/users.controller';
 import { SignupServiceImpl } from './usecases/signup.service.impl';
 import { PermissionGuard } from './infraestructure/inbound/middleware/authorization/authorizer.guard';
-
+import { ConfigService } from '@nestjs/config';
+const config: ConfigService = new ConfigService();
 @Module({
     imports: [
         MailerModule.forRoot({
             transport: {
-              host: process.env.SENDGRID_HOST,
-              secure: false,
+              host: 'smtp.mailtrap.io',
+              port: 587,
               auth: {
-                user: process.env.SENDGRID_USER,
-                pass: process.env.SENDGRID_PASS,
+                user: '6cfdaa7fb51558',
+                pass: '9cae84d5e6b9b1',
               },
             },
             defaults: {
