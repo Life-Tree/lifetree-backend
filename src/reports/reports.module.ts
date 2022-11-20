@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { BasicReporter } from './usecases/basic.reporter';
 import { ReportFinderImpl } from './usecases/reportFinder';
 import { ReportRepository } from './infraestructure/outbound/repository/mongodb/report.repository';
@@ -24,10 +24,19 @@ import { ReportedSignSymptomDtoMapper } from './infraestructure/inbound/dtos/rep
 import { HealthStatusDtoMapper } from './infraestructure/inbound/dtos/healthstatus.dto';
 import { TreeDtoMapper } from './infraestructure/inbound/dtos/tree.dto';
 import { UsersModule } from 'src/users/users.module';
+import { UserMiddleware } from './infraestructure/inbound/middleware/user.middleware';
+import { EmailSenderNodeMailer } from './infraestructure/outbound/emailSender/email.sender';
 
 @Module({
-    imports: [UsersModule],
+    imports: [
+        UsersModule
+    ],
     providers: [
+        EmailSenderNodeMailer,
+        {
+          provide: 'EmailSenderNodeMailer',
+          useClass: EmailSenderNodeMailer,
+        },
         SpecieEntityMapper, 
         SignSymptomEntityMapper,
         SignSymptomRepository,
@@ -98,4 +107,10 @@ import { UsersModule } from 'src/users/users.module';
     ],
     controllers: [ReportController]
 })
-export class ReportsModule {}
+export class ReportsModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer
+        .apply(UserMiddleware)
+        .forRoutes({ path: 'reports', method: RequestMethod.POST });
+    }
+}
