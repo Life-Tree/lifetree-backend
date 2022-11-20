@@ -16,6 +16,7 @@ export class RegisterDto{
     public idNumber: string;
     public roleName: string;
     public password: string;
+    public phone: string;
 }
 
 @Injectable()
@@ -30,6 +31,7 @@ export class RegisterDtoMapper{
         domain.setLastName(dto.lastName);
         domain.setIdtype(dto.idType);
         domain.setIdNumber(dto.idNumber);
+        domain.setPhone(dto.phone);
         const role: Role = await this.roleService.getRoleByRoleName(RoleNames.CITIZEN);
         domain.setRole(role)
         return domain;

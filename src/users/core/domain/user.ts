@@ -10,6 +10,15 @@ export class User{
     private idtype: IdType;
     private idNumber: string;
     private role: Role;
+    private phone: string;
+
+    public getPhone(): string {
+        return this.phone;
+    }
+
+    public setPhone(phone: string): void {
+        this.phone = phone;
+    }
 
     public getId(): string {
         return this.id;

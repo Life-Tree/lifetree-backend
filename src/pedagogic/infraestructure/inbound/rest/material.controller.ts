@@ -47,15 +47,7 @@ export class MaterialController {
     @UseGuards(JwtAuthGuard, PermissionGuard)
     @RequirePermissions(PermissionName.MATERIAL_CREATE)
     @Put()
-    async editReport(@Body() materialDto: MaterialDto): Promise<Material> {
+    async editMaterial(@Body() materialDto: MaterialDto): Promise<Material> {
         return this.materialService.updateMaterial(this.materialDtoMapper.dtoToDomain(materialDto));
-    }
-
-    @UseGuards(JwtAuthGuard, PermissionGuard)
-    @RequirePermissions(PermissionName.MATERIAL_CREATE)
-    @Delete(':idMaterial')
-    eliminarArbol(@Param('idMaterial') idMaterial: string): string{
-        // TODO delete report
-        return "TODO";
     }
 }

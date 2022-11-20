@@ -5,6 +5,8 @@ export enum IdType{
     CE = 4
 }
 
+export const idTypeString = ['','CC','TI','RC','CE']
+
 export enum VisitorsNames{
     LOGIN = 1, 
     LOGOUT = 2,

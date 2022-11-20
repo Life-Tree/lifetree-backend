@@ -8,6 +8,7 @@ import { IReporter } from "src/reports/core/ports/inbounding/reporter";
 import { IReportFinder } from "src/reports/core/ports/inbounding/reportFinder";
 import { PermissionName } from "src/users/core/enums/enums";
 import { JwtAuthGuard } from "src/users/infraestructure/inbound/middleware/authentication/jwt.guard";
+import { JwtWithUserAuthGuard } from "src/users/infraestructure/inbound/middleware/authentication/jwt.with.user.guard";
 import { RequirePermissions } from "src/users/infraestructure/inbound/middleware/authorization/authorizer.decorator";
 import { PermissionGuard } from "src/users/infraestructure/inbound/middleware/authorization/authorizer.guard";
 import { ReportDto, ReportDtoMapper } from "../dtos/report.dto";
@@ -66,12 +67,13 @@ export class ReportController {
         return this.reportFinder.listReports();
     } 
 
-    @UseGuards(JwtAuthGuard, PermissionGuard)
+    @UseGuards(JwtWithUserAuthGuard, PermissionGuard)
     @RequirePermissions(PermissionName.REPORT_CREATE)
     @Post()
     async createReport(@Request() req, @Body() report: ReportDto): Promise<Report> {
         report.reportedBy = req?.user?.userId;
-        return this.reporter.report(this.reportDtoMapper.dtoToDomain(report));
+        const user = req.user;
+        return this.reporter.report(this.reportDtoMapper.dtoToDomain(report), user);
     }
 
     @UseGuards(JwtAuthGuard, PermissionGuard)
