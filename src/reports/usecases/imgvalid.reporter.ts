@@ -7,6 +7,7 @@ import { ReportedSignSymptom } from "../core/domain/reportedSignSymptom";
 import { Tree } from "../core/domain/tree";
 import { IReporter } from "../core/ports/inbounding/reporter";
 import { IDiagnostician } from "../core/ports/outbounding/diagnostician";
+import { IEmailSender } from "../core/ports/outbounding/email.sender";
 import { IReportRepository } from "../core/ports/outbounding/repository/report.repository";
 import { ITreeRepository } from "../core/ports/outbounding/repository/tree.repository";
 import { IStorage } from "../core/ports/outbounding/storage";
@@ -25,9 +26,11 @@ export class ImgValidatorReporter implements IReporter {
         @Inject('BasicDiagnostician')
         private diagnostician: IDiagnostician,
         @Inject('TreeRepository')
-        private treeRepository: ITreeRepository){}
+        private treeRepository: ITreeRepository,
+        @Inject('EmailSenderNodeMailer')
+        private emailSender: IEmailSender){}
 
-    async report(report: Report): Promise<Report> {
+    async report(report: Report, userInfo: any): Promise<Report> {
         // Image processing
         if(!this.validateImages(report.getReportedTree().getImageSet().getImages())) {
             return null;
@@ -44,6 +47,10 @@ export class ImgValidatorReporter implements IReporter {
         // Save tree
         const savedTree: Tree = await this.treeRepository.saveTree(report.getReportedTree());
         report.setReportedTree(savedTree);
+
+        // Send email
+        const emailBody = Object.assign(report, userInfo);
+        this.emailSender.sendEmail(emailBody);
 
         // Save and return report
         return await this.reportRepository.saveReport(report);

@@ -33,29 +33,10 @@ import { UsersController } from './infraestructure/inbound/rest/users.controller
 import { SignupServiceImpl } from './usecases/signup.service.impl';
 import { PermissionGuard } from './infraestructure/inbound/middleware/authorization/authorizer.guard';
 import { ConfigService } from '@nestjs/config';
+import { JwtWithUserStrategy } from './infraestructure/inbound/middleware/authentication/jwt.with.user.strategy';
 const config: ConfigService = new ConfigService();
 @Module({
-    imports: [
-        MailerModule.forRoot({
-            transport: {
-              host: 'smtp.mailtrap.io',
-              port: 587,
-              auth: {
-                user: '6cfdaa7fb51558',
-                pass: '9cae84d5e6b9b1',
-              },
-            },
-            defaults: {
-              from: 'ebanoinfomation@gmail.com',
-            },
-            template: {
-              dir: join(__dirname, './infraestructure/outbound/emailSender'),
-              adapter: new HandlebarsAdapter(),
-              options: {
-                strict: true,
-              },
-            },
-          }),        
+    imports: [       
         PassportModule, 
         JwtModule.register({
             secret: jwtConstants.secret,
@@ -155,6 +136,7 @@ const config: ConfigService = new ConfigService();
         },
         LocalStrategy,
         JwtStrategy,
+        JwtWithUserStrategy,
         PermissionGuard
     ],
     controllers: [UsersController, AuthController],

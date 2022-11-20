@@ -1,0 +1,53 @@
+<div class="entry">
+  <h1 style="text-align: center">Reporte de árbol afectado</h1>
+  </br>
+    <div class="body">
+        <div>Cartagena de Indias, {{date}}</div>
+        <div>Dirigido a: Establecimiento Público Ambiental de Cartagena</div>
+        </br>
+        <div>
+            Yo, {{firstName}} {{lastName}}, identificado con {{idType}} {{idNumber}}, residente del barrio {{address}}, pongo en conocimiento de esta entidad, una solicitud asociada con las siguientes afectaciones observadas en un individuo arbóreo que se encuentra en {{reportedTree.location.neighborhood}}, {{reportedTree.location.address}}:
+        </div>
+        </br>
+        <table class="default">
+            <tr>
+                <td>Familia</td>
+                <td>{{reportedTree.specie.family}}</td>
+            </tr>
+            <tr>
+                <td>Nombre científico</td>
+                <td>{{reportedTree.specie.scientificName}}</td>
+            </tr>
+            <tr>
+                <td>Nombre común</td>
+                <td>{{reportedTree.specie.commonName}}</td>
+            </tr>
+            <tr>
+                <td>Cantidad</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>DAP</td>
+                <td>{{reportedTree.dch}}</td>
+            </tr>
+            <tr>
+                <td>Altura</td>
+                <td>{{reportedTree.height}}</td>
+            </tr>
+            <tr>
+                <td>Aspectos fitosanitarios</td>
+                <td>Según el pre-diagnóstico se identificó {{conditionsList}} asociado a los signos y síntomas: {{signSymptomsList}}</td>
+            </tr>
+        </table>
+        </br>
+        <h4>Evidencias fotográficas</h4>
+        {{#each reportedTree.healthStatus.reportedSignSymptoms}}
+        <img style="display: inline;" width="350" height="450" src={{imageSet.images.[0].url}}>
+        {{/each}}
+        </br>
+        <div>Para realización de visita por favor contactar:</div>
+        <div>{{firstName}} {{lastName}}</div>
+        <div>{{phone}}</div>
+        <div>{{username}}</div>
+    </div>
+</div>

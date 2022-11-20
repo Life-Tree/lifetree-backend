@@ -13,6 +13,7 @@ export class UserEntity{
     public idtype: number;
     public idNumber: string;
     public role: ObjectId;
+    public phone: string;
 }
 
 @Injectable()
@@ -30,6 +31,7 @@ export class UserEntityMapper{
         domain.setIdtype(entity.idtype);
         domain.setIdNumber(entity.idNumber);
         domain.setAddress(entity.address);
+        domain.setPhone(entity.phone);
         const role: Role = await this.roleRepo.findById(entity.role.toHexString());
         domain.setRole(role);
         return domain;
@@ -56,6 +58,7 @@ export class UserEntityMapper{
         entity.idNumber = domain.getIdNumber();
         entity.idtype = domain.getIdtype();
         entity.role = new ObjectId(domain.getRole().getId());
+        entity.phone = domain.getPhone();
         return entity;
     }
 }

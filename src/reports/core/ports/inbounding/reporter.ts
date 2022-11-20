@@ -1,5 +1,5 @@
 import { Report } from "../../domain/report";
 
 export interface IReporter {
-    report(report: Report): Promise<Report>;
+    report(report: Report, userInfo: any): Promise<Report>;
 }
